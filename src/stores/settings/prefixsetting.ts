@@ -60,20 +60,45 @@ export const prefixcustomerStore = defineStore("prefixcustomer",() => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = {message:"",status:false}
-    await ApiService.put("/setting/customerprefix","update", { data: [params] })
-      .then((data) => {
-        console.log(data);
+    await ApiService.update("/setting/customerprefix","update", { data: [params] })
+      .then(() => {
         res.message = "อัพเดตสำเร็จ";
         res.status = true;
       })
       .catch((e) => {
-        res.message = e.message;
-        res.status = false;
+        setError();
+      });
+    return res
+  }
+  const deletePrefixSettingById = async (params: PrefixCustomer):Promise<Resp>=>{
+    ApiService.setURL();
+    ApiService.setHeader();
+    const res: Resp = {message:"",status:false}
+    await ApiService.update("/setting/customerprefix","delete", { data: [params] })
+      .then(() => {
+        res.message = "ลบสำเร็จ";
+        res.status = true;
+      })
+      .catch((e) => {
+        setError();
+      });
+    return res
+  }
+  const insertPrefixSettingById = async (params: PrefixCustomer):Promise<Resp>=>{
+    ApiService.setURL();
+    ApiService.setHeader();
+    const res: Resp = {message:"",status:false}
+    await ApiService.post("/setting/customerprefix/insert", { data: [params] })
+      .then(() => {
+        res.message = "เพิ่มสำเร็จ";
+        res.status = true;
+      })
+      .catch((e) => {
         setError();
       });
     return res
   }
   return {
-    getPrefixSetting,getValidatePrefixSetting,updatePrefixSettingById
+    getPrefixSetting,getValidatePrefixSetting,updatePrefixSettingById,deletePrefixSettingById,insertPrefixSettingById
   };
 });

@@ -53,9 +53,10 @@ class ApiService {
     return ApiService.vueInstance.axios.post(`${resource}`, file, params);
   }
 
-  public static put(resource: string, slug: string, params: any): Promise<AxiosResponse> {
+  public static put(resource: string, slug: string,  params: any): Promise<AxiosResponse> {
     return ApiService.vueInstance.axios.put(`${resource}/${slug}`, params);
   }
+
 
   public static delete(resource: string): Promise<AxiosResponse> {
     return ApiService.vueInstance.axios.delete(resource);
