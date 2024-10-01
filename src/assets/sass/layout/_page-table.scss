@@ -1,0 +1,33 @@
+  .pagination-container {
+    display: flex;
+    column-gap: 10px;
+  }
+  .paginate-buttons {
+    height: 30px;
+    min-width: 25px;
+    width: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(242, 242, 242);
+    border: 1px solid rgb(217, 217, 217);
+    color: black;
+    font-size: 12px;
+  }
+  .paginate-buttons:hover {
+    background-color: #d8d8d8;
+  }
+  .active-page {
+    background-color: #860CAB;
+    border: 1px solid #860CAB;
+    color: white;
+  }
+  .active-page:hover {
+    background-color: #860CAB;
+  }
+
+  // Fix Table rounded top
+  .table-rounded{
+    border-radius: 15px !important;
+		border-spacing: 0;
+		border-collapse: separate;
+  }
