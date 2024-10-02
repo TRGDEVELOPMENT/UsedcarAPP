@@ -1,0 +1,1 @@
+import{g as o}from"./assets.cd52bb3f.js";import{f as s,_ as t,o as n,i as a,j as e}from"./index.0f357119.js";const c=s({name:"main-dashboard",components:{},setup(){return{getAssetPath:o,onclick}}}),r={class:""},i=e("h2",null,[e("b",null,"Welcome to used car Application")],-1),_=[i];function d(p,l,m,f,u,h){return n(),a("div",r,_)}const k=t(c,[["render",d]]);export{k as default};

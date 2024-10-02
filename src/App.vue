@@ -51,11 +51,11 @@ export default defineComponent({
 @import "@vueform/multiselect/themes/default.css";
 @import "prism-themes/themes/prism-shades-of-purple.css";
 @import "element-plus/dist/index.css";
-@import 'vue3-easy-data-table/dist/style.css';
+@import "vue3-easy-data-table/dist/style.css";
 @import "vue-awesome-paginate/dist/style.css";
-@import 'vue3-carousel/dist/carousel.css';
-@import 'vue3-form-wizard/dist/style.css';
-@import '@vuepic/vue-datepicker/dist/main.css';
+@import "vue3-carousel/dist/carousel.css";
+@import "vue3-form-wizard/dist/style.css";
+@import "@vuepic/vue-datepicker/dist/main.css";
 
 // Main demo style scss
 @import "assets/fonticon/fonticon.css";
