@@ -4,7 +4,7 @@
       <div class="d-flex flex-row">
         <div class="d-flex flex-row flex-column-fluid">
           <div class="d-flex flex-row-fluid flex-left my-5">
-            <span class="fs-5 fw-bold">ประเภทลูกค้า</span>
+            <span class="fs-5 fw-bold">เงื่อนไขการชำระ</span>
           </div>
           <div class="d-flex flex-row-auto w-400px flex-right me-2">
             <div class="card-title my-5">
@@ -15,7 +15,7 @@
                 />
                 <input
                   type="text"
-                  v-model="keyustomertype"
+                  v-model="keycustomerpanyment"
                   @change="onSearch"
                   class="form-control form-control-solid w-400px ps-15"
                   placeholder="ค้นหา"
@@ -31,9 +31,9 @@
                   class="btn btn-primary"
                   @click="onCreate()"
                   data-bs-toggle="modal"
-                  data-bs-target="#saveoreditcustomertype"
+                  data-bs-target="#saveoreditcustomerpayment"
                 >
-                  เพิ่มประเภทลูกค้า
+                  เพิ่มเงื่อนไขการชำระ
                 </button>
               </div>
             </div>
@@ -45,53 +45,37 @@
       <thead class="bg-gray-100">
         <tr class="fs-6 text-gray-800 border-bottom-2 border-gray-200">
           <th class="w-50px fw-semibold text-dark text-center">ลำดับ</th>
-          <th class="w-200px fw-semibold text-dark text-center">รหัสลูกค้า</th>
-          <th class="w-200px fw-semibold text-dark text-center">
-            ชื่อประเภทลูกค้า
-          </th>
-          <th class="w-200px fw-semibold text-dark text-center">
-            แสดง Parking Location
-          </th>
+          <th class="w-200px fw-semibold text-dark text-center">รหัสเงื่อนไขการชำระ</th>
+          <th class="w-200px fw-semibold text-dark text-center">ชื่อเงื่อนไขการชำระ</th>
           <th class="w-500px fw-semibold text-dark text-center">ผู้บันทึก</th>
           <th class="w-150px fw-semibold text-dark text-center">สร้างวันที่</th>
           <th class="w-150px fw-semibold text-dark text-center">แก้ไขล่าสุด</th>
           <th class="w-150px fw-semibold text-dark text-center">Option</th>
         </tr>
       </thead>
-      <tbody
-        v-for="(item, id) in listDataCustomerType.data"
-        :keyustomertype="id"
-      >
+      <tbody v-for="(item, id) in listdatacustomerpayment.data" :key="id">
         <tr>
           <td class="text-center">{{ item.no }}</td>
           <td class="fs-7">
-            <span class="fw-semibold">{{ item.typecode }}</span>
+            <span class="fw-semibold">{{ item.code }}</span>
           </td>
           <td class="fs-7">
             <span class="fw-semibold">{{ item.name }}</span>
           </td>
           <td class="fs-7">
-            <input
-              :disabled="true"
-              type="checkbox"
-              v-model="item.isparkinglocation"
-              class="fw-semibold"
-            />
-          </td>
-          <td class="fs-7">
             <span class="fw-semibold">{{ item.creatorname }}</span>
           </td>
           <td class="fs-7">
-            <span class="fw-semibold">{{ item.createddate }}</span>
+            <span class="fw-semibold">{{ item.createddate}}</span>
           </td>
           <td class="fs-7">
-            <span class="fw-semibold">{{ item.modifieddate }}</span>
+            <span class="fw-semibold">{{ item.modifieddate}}</span>
           </td>
           <td class="fs-7 text-center">
             <a
               @click="onEdit(item)"
               data-bs-toggle="modal"
-              data-bs-target="#saveoreditcustomertype"
+              data-bs-target="#saveoreditcustomerpayment"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
@@ -99,7 +83,7 @@
             <a
               @click="onEdit(item)"
               data-bs-toggle="modal"
-              data-bs-target="#deletecustomertype"
+              data-bs-target="#deletecustomerpayment"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
             >
               <KTIcon icon-name="trash" icon-class="fs-3" />
@@ -107,30 +91,24 @@
           </td>
         </tr>
       </tbody>
-      <tbody
-        v-if="
-          listDataCustomerType.data == undefined ||
-          listDataCustomerType.data.length == 0
-        "
-      >
+      <tbody v-if="listdatacustomerpayment.data == undefined || listdatacustomerpayment.data.length == 0">
         <tr class="fs-7 text-gray-800">
           <td colspan="6" class="text-center">ไม่พบข้อมูล</td>
         </tr>
       </tbody>
       <tfoot>
         <td colspan="2" class="text-start">
-          <span class="fw-semibold">จำนวนทั้งหมด :</span
-          >{{ totaldatacustomertype }}
+          <span class="fw-semibold">จำนวนทั้งหมด :</span> {{ totaldatacustomerpayment }}
         </td>
-        <td colspan="6" class="text-end">
+        <td colspan="5" class="text-end">
           <vue-awesome-paginate
-            v-if="totalpagecustomertype != 0"
-            :total-items="totalpagecustomertype"
+            v-if="totalpagecustomerpayment != 0"
+            :total-items="totalpagecustomerpayment"
             :items-per-page="5"
             :max-pages-shown="5"
             :show-jump-buttons="true"
             :on-click="onPageClick"
-            v-model="currentpagecustomertype"
+            v-model="currentpagecustomerpayment"
           />
         </td>
       </tfoot>
@@ -138,9 +116,9 @@
   </div>
   <div
     class="modal fade"
-    id="saveoreditcustomertype"
+    id="saveoreditcustomerpayment"
     data-bs-backdrop="static"
-    data-bs-keyustomertypeboard="false"
+    data-bs-keyboard="false"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
@@ -149,7 +127,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">
-            {{ titlemodalcustomertype }}
+            {{ titlemodalcustomerpayment }}
           </h5>
           <button
             type="button"
@@ -160,34 +138,24 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">รหัสลูกค้า</label>
+            <label class="form-label">รหัสเงื่อนไขการชำระ</label>
             <input
               type="text"
               class="form-control"
               id="prefixinputbox"
-              placeholder="J-O"
-              v-model="selectdatacustomertype.typecode"
+              placeholder="E-010"
+              v-model="selectdata.code"
             />
           </div>
           <div class="mb-3">
-            <label class="form-label">ชื่อประเภทลูกค้า</label>
+            <label class="form-label">ชื่อเงื่อนไขการชำระ</label>
             <input
               type="text"
               class="form-control"
               id="prefixinputbox"
-              placeholder="Retail-Online"
-              v-model="selectdatacustomertype.name"
+              placeholder="แคชเชียร์เช็ค"
+              v-model="selectdata.name"
             />
-          </div>
-          <div class="mb-3">
-            <div><label class="form-label">แสดง Parking Location</label></div>
-            <div>
-              <input
-                type="checkbox"
-                v-model="selectdatacustomertype.isparkinglocation"
-                class="fw-semibold"
-              />
-            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -213,9 +181,9 @@
   </div>
   <div
     class="modal fade"
-    id="deletecustomertype"
+    id="deletecustomerpayment"
     data-bs-backdrop="static"
-    data-bs-keyustomertypeboard="false"
+    data-bs-keyboard="false"
     tabindex="-1"
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
@@ -224,7 +192,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">
-            ต้องการลบประเภทลูกค้า ?
+            ต้องการลบเงื่อนไขการชำระ ?
           </h5>
           <button
             type="button"
@@ -235,37 +203,26 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">รหัสลูกค้า</label>
+            <label class="form-label">รหัสเงื่อนไขการชำระ</label>
             <input
               :disabled="true"
               type="text"
               class="form-control"
               id="prefixinputbox"
-              placeholder="J-O"
-              v-model="selectdatacustomertype.typecode"
+              placeholder="E-010"
+              v-model="selectdata.code"
             />
           </div>
           <div class="mb-3">
-            <label class="form-label">ชื่อประเภทลูกค้า</label>
+            <label class="form-label">ชื่อเงื่อนไขการชำระ</label>
             <input
               :disabled="true"
               type="text"
               class="form-control"
               id="prefixinputbox"
-              placeholder="Retail-Online"
-              v-model="selectdatacustomertype.name"
+              placeholder="แคชเชียร์เช็ค"
+              v-model="selectdata.name"
             />
-          </div>
-          <div class="mb-3">
-            <div><label class="form-label">แสดง Parking Location</label></div>
-            <div>
-              <input
-                :disabled="true"
-                type="checkbox"
-                v-model="selectdatacustomertype.isparkinglocation"
-                class="fw-semibold"
-              />
-            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -283,44 +240,41 @@
             data-bs-dismiss="modal"
             @click="onDelete"
           >
-            บันทึก
+            ลบ
           </button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref } from "vue";
 import {
-  customertypeStore,
-  type Customertype,
+  customerpaymentStore,
+  type CustomerPayment,
   type RespList,
   type Resp,
-} from "@/stores/settings/customersetting/customertype";
+} from "@/stores/settings/customersetting/customerpayment";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { toast, type ToastOptions } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 export default defineComponent({
-  name: "Customer type",
+  name: "Customer setting",
   components: {},
   setup() {
-    const customertypestore = customertypeStore();
-    let listDataCustomerType = ref<RespList<Customertype[]>>({
-      totaldata: 0,
-      data: [],
-    });
-    let titlemodalcustomertype = ref<string>("เพิ่มประเภทลูกค้า");
-    let totaldatacustomertype = ref<number>(0);
-    let totalpagecustomertype = ref<number>(1);
-    let currentpagecustomertype = ref<number>(1);
-    let keyustomertype = ref<string>("");
-    const selectdatacustomertype = ref<Customertype>({
+    const customerpaymentstore = customerpaymentStore();
+    let listdatacustomerpayment = ref<RespList<CustomerPayment[]>>({ totaldata: 0, data: [] });
+    let titlemodalcustomerpayment = ref<string>("เพิ่มเงื่อนไขการชำระ");
+    let totaldatacustomerpayment = ref<number>(0);
+    let totalpagecustomerpayment = ref<number>(1);
+    let currentpagecustomerpayment = ref<number>(1);
+    let keycustomerpanyment = ref<string>("");
+    const selectdata = ref<CustomerPayment>({
       id: 0,
       no: 0,
-      typecode: "",
-      precode: "",
+      code: "",
       name: "",
       description: "",
       isactive: false,
@@ -333,38 +287,77 @@ export default defineComponent({
       deletedid: "",
       deletedname: "",
       deleteddate: "",
-      isparkinglocation: false,
     });
     onMounted(() => {
       onInitial();
     });
     const onInitial = async () => {
-      listDataCustomerType.value = await customertypestore.getCustomerTypeList(
-        keyustomertype.value,
+      listdatacustomerpayment.value = await customerpaymentstore.getCustomerPaymentList(
+        keycustomerpanyment.value,
         1
       );
-      totaldatacustomertype.value = listDataCustomerType.value.totaldata;
-      totalpagecustomertype.value = totaldatacustomertype.value;
+      totaldatacustomerpayment.value = listdatacustomerpayment.value.totaldata;
+      totalpagecustomerpayment.value = totaldatacustomerpayment.value;
     };
     const onPageClick = async (page: number) => {
-      const keyword = keyustomertype.value.trim();
-      listDataCustomerType.value = await customertypestore.getCustomerTypeList(
+      const keyword = keycustomerpanyment.value.trim();
+      listdatacustomerpayment.value = await customerpaymentstore.getCustomerPaymentList(
         keyword,
         page
       );
-      totaldatacustomertype.value = listDataCustomerType.value.totaldata;
-      totalpagecustomertype.value = totalpagecustomertype.value;
-      currentpagecustomertype.value = page;
+      totaldatacustomerpayment.value = listdatacustomerpayment.value.totaldata;
+      totalpagecustomerpayment.value = totaldatacustomerpayment.value;
+      currentpagecustomerpayment.value = page;
     };
-    const onEdit = async (item: Customertype) => {
-      selectdatacustomertype.value = {
+    const onSearch = async () => {
+        currentpagecustomerpayment.value = 1;
+      const keySearch = keycustomerpanyment.value.trim();
+      if (keySearch != "") {
+        const keyword = keycustomerpanyment.value.trim();
+        listdatacustomerpayment.value = await customerpaymentstore.getCustomerPaymentList(
+          keyword,
+          currentpagecustomerpayment.value
+        );
+        totaldatacustomerpayment.value = listdatacustomerpayment.value.totaldata;
+        totalpagecustomerpayment.value = totaldatacustomerpayment.value;
+      } else {
+        onInitial();
+      }
+      console.log(listdatacustomerpayment.value);
+    };
+    const onCreate = async () => {
+      selectdata.value = {
+        id: 0,
+        no: 0,
+        code: "",
+        name: "",
+        description: "",
+        isactive: true,
+        creatorid: "",
+        creatorname: "",
+        createddate: "",
+        modifiedid: "",
+        modifiedname: "",
+        modifieddate: "",
+        deletedid: "",
+        deletedname: "",
+        deleteddate: "",
+      };
+
+      if (selectdata.value.code == undefined || selectdata.value.code == "") {
+        titlemodalcustomerpayment.value = "เพิ่มเงื่อนไขการชำระ";
+      } else {
+        titlemodalcustomerpayment.value = "แก้ไขเงื่อนไขการชำระ";
+      }
+    };
+    const onEdit = async (item: CustomerPayment) => {
+      selectdata.value = {
         id: item.id,
-        no: item.no,
-        typecode: item.typecode,
-        precode: item.precode,
+        no: item.id,
+        code: item.code,
         name: item.name,
-        description: item.typecode,
-        isactive: item.isactive,
+        description: item.description,
+        isactive: true,
         creatorid: item.creatorid,
         creatorname: item.creatorname,
         createddate: item.createddate,
@@ -374,23 +367,24 @@ export default defineComponent({
         deletedid: item.deletedid,
         deletedname: item.deletedname,
         deleteddate: item.deleteddate,
-        isparkinglocation: item.isparkinglocation,
       };
-      if (selectdatacustomertype.value.id == undefined || selectdatacustomertype.value.id == 0) {
-        titlemodalcustomertype.value = "เพิ่มประเภทลูกค้า";
+
+      if (selectdata.value.code == undefined || selectdata.value.code == "") {
+        titlemodalcustomerpayment.value = "เพิ่มเงื่อนไขการชำระ";
       } else {
-        titlemodalcustomertype.value = "แก้ไขประเภทลูกค้า";
+        titlemodalcustomerpayment.value = "แก้ไขเงื่อนไขการชำระ";
       }
     };
     const onSave = async () => {
-      console.log(selectdatacustomertype.value);
       const resp = ref<Resp>({ message: "", status: false });
-      resp.value = await customertypestore.getValidateCustomerType(selectdatacustomertype.value);
+      resp.value = await customerpaymentstore.getValidateCustomerPayment(
+        selectdata.value
+      );
       if (resp.value.status) {
-        if (selectdatacustomertype.value.id == 0) {
-          console.log("if" + selectdatacustomertype.value.id);
-          resp.value = await customertypestore.insertCustomertypeById(
-            selectdatacustomertype.value
+        if (selectdata.value.id == 0) {
+          console.log("if" + selectdata.value.id);
+          resp.value = await customerpaymentstore.insertCustomerPaymentById(
+            selectdata.value
           );
           if (resp.value.status) {
             Swal.fire({
@@ -416,8 +410,8 @@ export default defineComponent({
             });
           }
         } else {
-          resp.value = await customertypestore.updateCustomerTypeById(
-            selectdatacustomertype.value
+          resp.value = await customerpaymentstore.updateCustomerPaymentById(
+            selectdata.value
           );
           if (resp.value.status) {
             Swal.fire({
@@ -455,20 +449,22 @@ export default defineComponent({
           },
         });
       }
-      listDataCustomerType.value = await customertypestore.getCustomerTypeList(
-        keyustomertype.value,
-        currentpagecustomertype.value
+      listdatacustomerpayment.value = await customerpaymentstore.getCustomerPaymentList(
+        keycustomerpanyment.value,
+        currentpagecustomerpayment.value
       );
-      totaldatacustomertype.value = listDataCustomerType.value.totaldata;
-      totalpagecustomertype.value = totaldatacustomertype.value;
+      totaldatacustomerpayment.value = listdatacustomerpayment.value.totaldata;
+      totalpagecustomerpayment.value = totaldatacustomerpayment.value;
     };
     const onDelete = async () => {
       const resp = ref<Resp>({ message: "", status: false });
-      resp.value = await customertypestore.getValidateCustomerType(selectdatacustomertype.value);
+      resp.value = await customerpaymentstore.getValidateCustomerPayment(
+        selectdata.value
+      );
       if (resp.value.status) {
-        selectdatacustomertype.value.isactive = false;
-        resp.value = await customertypestore.deletePrefixSettingById(
-          selectdatacustomertype.value
+        selectdata.value.isactive = false;
+        resp.value = await customerpaymentstore.deleteCustomerPaymentById(
+          selectdata.value
         );
         if (resp.value.status) {
           Swal.fire({
@@ -505,69 +501,26 @@ export default defineComponent({
           },
         });
       }
-      listDataCustomerType.value = await customertypestore.getCustomerTypeList(
-        keyustomertype.value,
-        currentpagecustomertype.value
+      listdatacustomerpayment.value = await customerpaymentstore.getCustomerPaymentList(
+        keycustomerpanyment.value,
+        currentpagecustomerpayment.value
       );
-      totaldatacustomertype.value = listDataCustomerType.value.totaldata;
-      totalpagecustomertype.value = totaldatacustomertype.value;
-    };
-    const onSearch = async () => {
-      currentpagecustomertype.value = 1;
-      const keySearch = keyustomertype.value.trim();
-      if (keySearch != "") {
-        const keyword = keyustomertype.value.trim();
-        listDataCustomerType.value =
-          await customertypestore.getCustomerTypeList(
-            keyword,
-            currentpagecustomertype.value
-          );
-        totaldatacustomertype.value = listDataCustomerType.value.totaldata;
-        totalpagecustomertype.value = totaldatacustomertype.value;
-      } else {
-        onInitial();
-      }
-      console.log(listDataCustomerType.value);
-    };
-    const onCreate = async () => {
-      selectdatacustomertype.value = {
-        id: 0,
-        no: 0,
-        typecode: "",
-        precode: "",
-        name: "",
-        description: "",
-        isactive: false,
-        creatorid: "",
-        creatorname: "",
-        createddate: "",
-        modifiedid: "",
-        modifiedname: "",
-        modifieddate: "",
-        deletedid: "",
-        deletedname: "",
-        deleteddate: "",
-        isparkinglocation: false,
-      };
-      if (selectdatacustomertype.value.id == undefined || selectdatacustomertype.value.id == 0) {
-        titlemodalcustomertype.value = "เพิ่มประเภทลูกค้า";
-      } else {
-        titlemodalcustomertype.value = "แก้ไขประเภทลูกค้า";
-      }
+      totaldatacustomerpayment.value = listdatacustomerpayment.value.totaldata;
+      totalpagecustomerpayment.value = totaldatacustomerpayment.value;
     };
     return {
       getAssetPath,
-      listDataCustomerType,
+      listdatacustomerpayment,
       onEdit,
       onDelete,
       onSave,
-      selectdatacustomertype,
-      titlemodalcustomertype,
-      totaldatacustomertype,
-      totalpagecustomertype,
-      currentpagecustomertype,
+      selectdata,
+      titlemodalcustomerpayment,
+      totaldatacustomerpayment,
+      totalpagecustomerpayment,
+      currentpagecustomerpayment,
       onPageClick,
-      keyustomertype,
+      keycustomerpanyment,
       onSearch,
       onCreate,
     };
@@ -578,7 +531,4 @@ export default defineComponent({
 .p-header {
   padding: 1%;
 }
-/* input[type="checkbox"]:disabled + label::before{
-  background: blueviolet;
-} */
 </style>

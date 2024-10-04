@@ -32,8 +32,13 @@ const MainMenuConfig: Array<MenuItem> = [
             heading: "ตั้งค่าลูกค้า",
             route: "/customersetting",
           },
+          {
+            heading: "ประเมินสะภาพ",
+            route: "/assesssetting",
+          },
         ],
       },
+      
     ],
   },
 ];

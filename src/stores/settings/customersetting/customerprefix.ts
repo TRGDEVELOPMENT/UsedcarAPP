@@ -51,7 +51,7 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
       page: page,
       key: key,
     };
-    await ApiService.get("/setting/customerprefix/list", { params: params })
+    await ApiService.get("/setting/customersetting/customerprefix/list", { params: params })
       .then((data) => {
         res = data.data[0];
       })
@@ -66,7 +66,7 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = { message: "", status: false };
-    await ApiService.update("/setting/customerprefix", "update", {
+    await ApiService.update("/setting/customersetting/customerprefix", "update", {
       data: [params],
     })
       .then(() => {
@@ -84,7 +84,7 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = { message: "", status: false };
-    await ApiService.update("/setting/customerprefix", "delete", {
+    await ApiService.update("/setting/customersetting/customerprefix", "delete", {
       data: [params],
     })
       .then(() => {
@@ -102,7 +102,7 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = { message: "", status: false };
-    await ApiService.post("/setting/customerprefix/insert", { data: [params] })
+    await ApiService.post("/setting/customersetting/customerprefix/insert", { data: [params] })
       .then(() => {
         res.message = "เพิ่มสำเร็จ";
         res.status = true;
@@ -112,6 +112,7 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
       });
     return res;
   };
+  
   return {
     getPrefixSettingList,
     getValidatePrefixSetting,

@@ -2,11 +2,10 @@ import { defineStore } from "pinia";
 import ApiService from "@/core/services/ApiService";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-interface Customertype {
+interface CustomerPayment {
   id: number;
   no: number;
-  typecode: string;
-  precode: string;
+  code: string;
   name: string;
   description: string;
   isactive: boolean;
@@ -19,7 +18,6 @@ interface Customertype {
   deletedid: string;
   deletedname: string;
   deleteddate: string;
-  isparkinglocation: boolean;
 }
 interface RespList<data = any> {
   totaldata: number;
@@ -29,37 +27,39 @@ interface Resp {
   message: string;
   status: boolean;
 }
-export type { Customertype, RespList, Resp };
-export const customertypeStore = defineStore("customertype", () => {
+export type { CustomerPayment, RespList, Resp };
+export const customerpaymentStore = defineStore("customerpayment", () => {
   const router = useRouter();
   function setError() {
     router.push({ name: "500" });
   }
-  const getValidateCustomerType = async (data: Customertype): Promise<Resp> => {
+  const getValidateCustomerPayment = async (
+    data: CustomerPayment
+  ): Promise<Resp> => {
     let res: Resp = { message: "", status: false };
-    if (data.typecode == undefined || data.typecode.trim() == "") {
-      res.message = "ไม่ได้ใส่รหัสประเภทลูกค้า";
+    if (data.code == undefined || data.code.trim() == "") {
+      res.message = "ไม่ได้ใส่รหัสเงื่อนไขการชำระ";
     }
     if (data.name == undefined || data.name.trim() == "") {
-      res.message += ", ไม่ได้ใส่ชื่อประเภทลูกค้า";
+      res.message += ", ไม่ได้ใส่ชื่อเงื่อนไขการชำระ";
     } else {
       res.message = "";
       res.status = true;
     }
     return res;
   };
-  const getCustomerTypeList = async (
+  const getCustomerPaymentList = async (
     key: string,
     page: number
-  ): Promise<RespList<Customertype[]>> => {
+  ): Promise<RespList<CustomerPayment[]>> => {
     ApiService.setURL();
     ApiService.setHeader();
-    let res: RespList<Customertype[]> = { totaldata: 0, data: [] };
+    let res: RespList<CustomerPayment[]> = { totaldata: 0, data: [] };
     const params = {
       page: page,
       key: key,
     };
-    await ApiService.get("/setting/customersetting/customertype/list", { params: params })
+    await ApiService.get("/setting/customersetting/customerpayment/list", { params: params })
       .then((data) => {
         res = data.data[0];
       })
@@ -68,13 +68,13 @@ export const customertypeStore = defineStore("customertype", () => {
       });
     return res;
   };
-  const updateCustomerTypeById = async (
-    params: Customertype
+  const updateCustomerPaymentById = async (
+    params: CustomerPayment
   ): Promise<Resp> => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = { message: "", status: false };
-    await ApiService.update("/setting/customersetting/customertype", "update", {
+    await ApiService.update("/setting/customersetting/customerpayment", "update", {
       data: [params],
     })
       .then(() => {
@@ -86,13 +86,13 @@ export const customertypeStore = defineStore("customertype", () => {
       });
     return res;
   };
-  const deletePrefixSettingById = async (
-    params: Customertype
+  const deleteCustomerPaymentById = async (
+    params: CustomerPayment
   ): Promise<Resp> => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = { message: "", status: false };
-    await ApiService.update("/setting/customersetting/customertype", "delete", {
+    await ApiService.update("/setting/customersetting/customerpayment", "delete", {
       data: [params],
     })
       .then(() => {
@@ -104,13 +104,13 @@ export const customertypeStore = defineStore("customertype", () => {
       });
     return res;
   };
-  const insertCustomertypeById = async (
-    params: Customertype
+  const insertCustomerPaymentById = async (
+    params: CustomerPayment
   ): Promise<Resp> => {
     ApiService.setURL();
     ApiService.setHeader();
     const res: Resp = { message: "", status: false };
-    await ApiService.post("/setting/customersetting/customertype/insert", { data: [params] })
+    await ApiService.post("/setting/customersetting/customerpayment/insert", { data: [params] })
       .then(() => {
         res.message = "เพิ่มสำเร็จ";
         res.status = true;
@@ -120,11 +120,5 @@ export const customertypeStore = defineStore("customertype", () => {
       });
     return res;
   };
-  return {
-    getValidateCustomerType,
-    getCustomerTypeList,
-    updateCustomerTypeById,
-    insertCustomertypeById,
-    deletePrefixSettingById
-  };
+  return { getValidateCustomerPayment,getCustomerPaymentList,updateCustomerPaymentById,deleteCustomerPaymentById,insertCustomerPaymentById };
 });

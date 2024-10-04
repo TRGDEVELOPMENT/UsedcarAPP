@@ -231,7 +231,7 @@ import {
   type PrefixCustomer,
   type RespList,
   type Resp,
-} from "@/stores/settings/customersetting/prefixsetting";
+} from "@/stores/settings/customersetting/customerprefix";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import { toast, type ToastOptions } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -304,9 +304,9 @@ export default defineComponent({
       };
 
       if (selectdata.value.text == undefined || selectdata.value.text == "") {
-        titlemodalprefix.value = "เพิ่มไขคำนำหน้าชื่อ";
+        titlemodalprefix.value = "เพิ่มคำนำหน้าชื่อ";
       } else {
-        titlemodalprefix.value = "แก้ไขไขคำนำหน้าชื่อ";
+        titlemodalprefix.value = "แก้ไขคำนำหน้าชื่อ";
       }
     };
     const onEdit = async (item: PrefixCustomer) => {
@@ -326,7 +326,7 @@ export default defineComponent({
       if (selectdata.value.text == undefined || selectdata.value.text == "") {
         titlemodalprefix.value = "เพิ่มไขคำนำหน้าชื่อ";
       } else {
-        titlemodalprefix.value = "แก้ไขไขคำนำหน้าชื่อ";
+        titlemodalprefix.value = "แก้ไขคำนำหน้าชื่อ";
       }
     };
     const onSave = async () => {

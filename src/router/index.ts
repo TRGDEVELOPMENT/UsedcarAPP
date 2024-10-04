@@ -41,6 +41,14 @@ const routes: Array<RouteRecordRaw> = [
               pageTitle: "customer setting", breadcrumbs: ["customer setting"],
             },
           },
+          {
+            path: "/assesssetting",
+            name: "assess setting",
+            component: () => import("@/views/pages/setting/assesssetting/assesssetting.vue"),
+            meta: {
+              pageTitle: "assess setting", breadcrumbs: ["assess setting"],
+            },
+          },
         ]
       },
     ],

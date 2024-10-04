@@ -6,12 +6,12 @@
           <span class="">ตั้งค่า</span>
         </li>
         <li class="breadcrumb-item">
-          <span class="">ตั้งค่าลูกค้า</span>
+          <span class="">ตั้งค่าประเมินสภาพ</span>
         </li>
       </ol>
     </div>
     <div class="p-header">
-      <span class="fs-2 fw-bold">ตั้งค่าลูกค้า</span>
+      <span class="fs-2 fw-bold">ตั้งค่าประเมินสภาพ</span>
     </div>
     <div class="card shadow-sm container-card">
       <div class="card-body">
@@ -22,22 +22,17 @@
                 class="nav-link active"
                 data-bs-toggle="tab"
                 href="#kt_tab_pane_1"
-                >คำนำหน้าชื่อ</a
+                >ประเภทหลังคา</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2"
-                >ประเภทลูกค้า</a
+                >สถานะไฟแนนซ์</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3"
-                >เงื่อนไขการชำระ</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_4"
-                >ประเภทที่อยู่</a
+                >สถานะ Rerent</a
               >
             </li>
           </ul>
@@ -47,16 +42,13 @@
               id="kt_tab_pane_1"
               role="tabpanel"
             >
-              <prefixcustomer></prefixcustomer>
+              <rooftype></rooftype>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
-              <customertype></customertype>
+              tab2
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
-              <customerpayment></customerpayment>
-            </div>
-            <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel">
-              <customeradresstype></customeradresstype>
+              tab3
             </div>
           </div>
         </div>
@@ -67,18 +59,10 @@
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref } from "vue";
-import prefixcustomer from "./customerprefix.vue";
-import customertype from "./customertype.vue";
-import customerpayment from "./customerpayment.vue";
-import customeradresstype from "./customeradresstype.vue";
+import rooftype from "./rooftype.vue";
 export default defineComponent({
   name: "Customer setting",
-  components: {
-    prefixcustomer,
-    customertype,
-    customerpayment,
-    customeradresstype
-  },
+  components: { rooftype },
   setup() {
     onMounted(() => {
       initial();
