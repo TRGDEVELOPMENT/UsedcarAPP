@@ -4,7 +4,7 @@
       <div class="d-flex flex-row">
         <div class="d-flex flex-row flex-column-fluid">
           <div class="d-flex flex-row-fluid flex-left my-5">
-            <span class="fs-5 fw-bold">ประเภทหลังคา</span>
+            <span class="fs-5 fw-bold">สถานะ Rerent</span>
           </div>
           <div class="d-flex flex-row-auto w-400px flex-right me-2">
             <div class="card-title my-5">
@@ -15,7 +15,7 @@
                 />
                 <input
                   type="name"
-                  v-model="keyrooftype"
+                  v-model="keyrerentstatus"
                   @change="onSearch"
                   class="form-control form-control-solid w-400px ps-15"
                   placeholder="ค้นหา"
@@ -31,9 +31,9 @@
                   class="btn btn-primary"
                   @click="onCreate()"
                   data-bs-toggle="modal"
-                  data-bs-target="#saveoredit"
+                  data-bs-target="#saveoreditrerentstatus"
                 >
-                  เพิ่มประเภทหลังคา
+                  เพิ่มสถานะ Rerent
                 </button>
               </div>
             </div>
@@ -46,19 +46,23 @@
         <tr class="fs-6 name-gray-800 border-bottom-2 border-gray-200">
           <th class="w-50px fw-semibold name-dark name-center">ลำดับ</th>
           <th class="w-200px fw-semibold name-dark name-center">
-            ประเภทหลังคา
+            ชื่อ status
           </th>
-          <th class="w-200px fw-semibold name-dark name-center">ผู้บันทึก</th>
-          <th class="w-500px fw-semibold name-dark name-center">สร้างวันที่</th>
-          <th class="w-150px fw-semibold name-dark name-center">แก้ไขล่าสุด</th>
+          <th class="w-200px fw-semibold name-dark name-center">คำอธิบาย</th>
+          <th class="w-500px fw-semibold name-dark name-center">ผู้บันทึก</th>
+          <th class="w-150px fw-semibold name-dark name-center">สร้างวันที่</th>
+          <th class="w-150px fw-semibold name-dark name-center">แก้ไขล่าสุดวันที่</th>
           <th class="w-150px fw-semibold name-dark name-center">Option</th>
         </tr>
       </thead>
-      <tbody v-for="(item, id) in listdatarooftype.data" :key="id">
+      <tbody v-for="(item, id) in listdatarerentstatus.data" :key="id">
         <tr>
           <td class="name-center">{{ item.no }}</td>
           <td class="fs-7">
-            <span class="fw-semibold">{{ item.name }}</span>
+            <span class="fw-semibold">{{ item.status }}</span>
+          </td>
+          <td class="fs-7">
+            <span class="fw-semibold">{{ item.description }}</span>
           </td>
           <td class="fs-7">
             <span class="fw-semibold">{{ item.creatorname }}</span>
@@ -73,7 +77,7 @@
             <a
               @click="onEdit(item)"
               data-bs-toggle="modal"
-              data-bs-target="#saveoredit"
+              data-bs-target="#saveoreditrerentstatus"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
@@ -81,7 +85,7 @@
             <a
               @click="onEdit(item)"
               data-bs-toggle="modal"
-              data-bs-target="#delete"
+              data-bs-target="#deletererentstatus"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
             >
               <KTIcon icon-name="trash" icon-class="fs-3" />
@@ -91,8 +95,8 @@
       </tbody>
       <tbody
         v-if="
-          listdatarooftype.data == undefined ||
-          listdatarooftype.data.length == 0
+          listdatarerentstatus.data == undefined ||
+          listdatarerentstatus.data.length == 0
         "
       >
         <tr class="fs-7 name-gray-800">
@@ -101,17 +105,17 @@
       </tbody>
       <tfoot>
         <td colspan="2" class="text-start">
-          <span class="fw-semibold">จำนวนทั้งหมด :</span> {{ totaldatarooftype }}
+          <span class="fw-semibold">จำนวนทั้งหมด :</span> {{ totaldatarerentstatus }}
         </td>
         <td colspan="5" class="text-end">
           <vue-awesome-paginate
-            v-if="totalpagerooftype != 0"
-            :total-items="totalpagerooftype"
+            v-if="totalpagererentstatus != 0"
+            :total-items="totalpagererentstatus"
             :items-per-page="5"
             :max-pages-shown="5"
             :show-jump-buttons="true"
             :on-click="onPageClick"
-            v-model="currentpagerooftype"
+            v-model="currentpagererentstatus"
           />
         </td>
       </tfoot>
@@ -119,7 +123,7 @@
   </div>
   <div
     class="modal fade"
-    id="saveoredit"
+    id="saveoreditrerentstatus"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -130,7 +134,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">
-            {{ titlemodalrooftype }}
+            {{ titlemodalrerentstatus }}
           </h5>
           <button
             type="button"
@@ -141,13 +145,23 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">ประเภทหลังคา</label>
+            <label class="form-label">ชื่อ status</label>
             <input
               type="name"
               class="form-control"
               id="prefixinputbox"
-              placeholder="นาย/ นาง/ นางสาว"
-              v-model="selectdatarooftype.name"
+              placeholder="ชื่อ status"
+              v-model="selectdatarerentstatus.status"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">คำอธิบาย</label>
+            <input
+              type="name"
+              class="form-control"
+              id="prefixinputbox"
+              placeholder="คำอธิบาย"
+              v-model="selectdatarerentstatus.description"
             />
           </div>
         </div>
@@ -174,7 +188,7 @@
   </div>
   <div
     class="modal fade"
-    id="delete"
+    id="deletererentstatus"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -185,7 +199,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">
-            ต้องการลบประเภทหลังคา ?
+            ต้องการลบ status ?
           </h5>
           <button
             type="button"
@@ -196,14 +210,25 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">ประเภทหลังคา</label>
+            <label class="form-label">ชื่อ status</label>
             <input
               :disabled="true"
               type="name"
               class="form-control"
               id="prefixinputbox"
-              placeholder="ประเภทหลังคา"
-              v-model="selectdatarooftype.name"
+              placeholder="ชื่อ status"
+              v-model="selectdatarerentstatus.status"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">คำอธิบาย	</label>
+            <input
+              :disabled="true"
+              type="name"
+              class="form-control"
+              id="prefixinputbox"
+              placeholder="คำอธิบาย	"
+              v-model="selectdatarerentstatus.description"
             />
           </div>
         </div>
@@ -234,31 +259,31 @@
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref } from "vue";
 import {
-  rooftypeStore,
-  type RootType,
+  rerentstatusStore,
+  type ReRentStatus,
   type RespList,
   type Resp,
-} from "@/stores/settings/assessetting/rooftype";
+} from "@/stores/settings/assessetting/rerentstatus";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "vue3-toastify/dist/index.css";
 export default defineComponent({
-  name: "Roof Type",
+  name: "Rerent Status",
   components: {},
   setup() {
-    const rooftypestore = rooftypeStore();
-    let listdatarooftype = ref<RespList<RootType[]>>({
+    const rerentstatusstore = rerentstatusStore();
+    let listdatarerentstatus = ref<RespList<ReRentStatus[]>>({
       totaldata: 0,
       data: [],
     });
-    let titlemodalrooftype = ref<string>("เพิ่มประเภทหลังคา");
-    let totaldatarooftype = ref<number>(0);
-    let totalpagerooftype = ref<number>(1);
-    let currentpagerooftype = ref<number>(1);
-    let keyrooftype = ref<string>("");
-    const selectdatarooftype = ref<RootType>({
+    let titlemodalrerentstatus = ref<string>("เพิ่ม status");
+    let totaldatarerentstatus = ref<number>(0);
+    let totalpagererentstatus = ref<number>(1);
+    let currentpagererentstatus = ref<number>(1);
+    let keyrerentstatus = ref<string>("");
+    const selectdatarerentstatus = ref<ReRentStatus>({
       id: 0,
       no: 0,
-      name: "",
+      status: "",
       description: "",
       isactive: false,
       creatorid: "",
@@ -275,44 +300,44 @@ export default defineComponent({
       onInitial();
     });
     const onInitial = async () => {
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
-        keyrooftype.value,
+      listdatarerentstatus.value = await rerentstatusstore.getReRentStatusList(
+        keyrerentstatus.value,
         1
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
+      totaldatarerentstatus.value = listdatarerentstatus.value.totaldata;
+      totalpagererentstatus.value = totaldatarerentstatus.value;
     };
     const onPageClick = async (page: number) => {
-      const keyword = keyrooftype.value.trim();
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
+      const keyword = keyrerentstatus.value.trim();
+      listdatarerentstatus.value = await rerentstatusstore.getReRentStatusList(
         keyword,
         page
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
-      currentpagerooftype.value = page;
+      totaldatarerentstatus.value = listdatarerentstatus.value.totaldata;
+      totalpagererentstatus.value = totaldatarerentstatus.value;
+      currentpagererentstatus.value = page;
     };
     const onSearch = async () => {
-      currentpagerooftype.value = 1;
-      const keySearch = keyrooftype.value.trim();
+      currentpagererentstatus.value = 1;
+      const keySearch = keyrerentstatus.value.trim();
       if (keySearch != "") {
-        const keyword = keyrooftype.value.trim();
-        listdatarooftype.value = await rooftypestore.getRootTypeList(
+        const keyword = keyrerentstatus.value.trim();
+        listdatarerentstatus.value = await rerentstatusstore.getReRentStatusList(
           keyword,
-          currentpagerooftype.value
+          currentpagererentstatus.value
         );
-        totaldatarooftype.value = listdatarooftype.value.totaldata;
-        totalpagerooftype.value = totaldatarooftype.value;
+        totaldatarerentstatus.value = listdatarerentstatus.value.totaldata;
+        totalpagererentstatus.value = totaldatarerentstatus.value;
       } else {
         onInitial();
       }
-      console.log(listdatarooftype.value);
+      console.log(listdatarerentstatus.value);
     };
     const onCreate = async () => {
-      selectdatarooftype.value = {
+      selectdatarerentstatus.value = {
         id: 0,
         no: 0,
-        name: "",
+        status: "",
         description: "",
         isactive: false,
         creatorid: "",
@@ -327,19 +352,19 @@ export default defineComponent({
       };
 
       if (
-        selectdatarooftype.value.name == undefined ||
-        selectdatarooftype.value.name == ""
+        selectdatarerentstatus.value.status == undefined ||
+        selectdatarerentstatus.value.status == ""
       ) {
-        titlemodalrooftype.value = "เพิ่มไขประเภทหลังคา";
+        titlemodalrerentstatus.value = "เพิ่มไข status";
       } else {
-        titlemodalrooftype.value = "แก้ไขประเภทหลังคา";
+        titlemodalrerentstatus.value = "แก้ไข status";
       }
     };
-    const onEdit = async (item: RootType) => {
-      selectdatarooftype.value = {
+    const onEdit = async (item: ReRentStatus) => {
+      selectdatarerentstatus.value = {
         id: item.id,
         no: item.no,
-        name: item.name,
+        status: item.status,
         description: item.description,
         isactive: item.isactive,
         creatorid: item.creatorid,
@@ -354,24 +379,24 @@ export default defineComponent({
       };
 
       if (
-        selectdatarooftype.value.name == undefined ||
-        selectdatarooftype.value.name == ""
+        selectdatarerentstatus.value.status == undefined ||
+        selectdatarerentstatus.value.status == ""
       ) {
-        titlemodalrooftype.value = "เพิ่มประเภทหลังคา";
+        titlemodalrerentstatus.value = "เพิ่ม status";
       } else {
-        titlemodalrooftype.value = "แก้ไขประเภทหลังคา";
+        titlemodalrerentstatus.value = "แก้ไข status";
       }
     };
     const onSave = async () => {
       const resp = ref<Resp>({ message: "", status: false });
-      resp.value = await rooftypestore.getValidateRootType(
-        selectdatarooftype.value
+      resp.value = await rerentstatusstore.getValidateReRentStatus(
+        selectdatarerentstatus.value
       );
       if (resp.value.status) {
-        if (selectdatarooftype.value.id == 0) {
-          console.log("if" + selectdatarooftype.value.id);
-          resp.value = await rooftypestore.insertRootTypeById(
-            selectdatarooftype.value
+        if (selectdatarerentstatus.value.id == 0) {
+          console.log("if" + selectdatarerentstatus.value.id);
+          resp.value = await rerentstatusstore.insertReRentStatusById(
+            selectdatarerentstatus.value
           );
           if (resp.value.status) {
             Swal.fire({
@@ -397,8 +422,8 @@ export default defineComponent({
             });
           }
         } else {
-          resp.value = await rooftypestore.updateRootTypeById(
-            selectdatarooftype.value
+          resp.value = await rerentstatusstore.updateReRentStatusById(
+            selectdatarerentstatus.value
           );
           if (resp.value.status) {
             Swal.fire({
@@ -436,22 +461,22 @@ export default defineComponent({
           },
         });
       }
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
-        keyrooftype.value,
-        currentpagerooftype.value
+      listdatarerentstatus.value = await rerentstatusstore.getReRentStatusList(
+        keyrerentstatus.value,
+        currentpagererentstatus.value
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
+      totaldatarerentstatus.value = listdatarerentstatus.value.totaldata;
+      totalpagererentstatus.value = totaldatarerentstatus.value;
     };
     const onDelete = async () => {
       const resp = ref<Resp>({ message: "", status: false });
-      resp.value = await rooftypestore.getValidateRootType(
-        selectdatarooftype.value
+      resp.value = await rerentstatusstore.getValidateReRentStatus(
+        selectdatarerentstatus.value
       );
       if (resp.value.status) {
-        selectdatarooftype.value.isactive = false;
-        resp.value = await rooftypestore.deleteRootTypeById(
-          selectdatarooftype.value
+        selectdatarerentstatus.value.isactive = false;
+        resp.value = await rerentstatusstore.deleteReRentStatusById(
+          selectdatarerentstatus.value
         );
         if (resp.value.status) {
           Swal.fire({
@@ -488,26 +513,26 @@ export default defineComponent({
           },
         });
       }
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
-        keyrooftype.value,
-        currentpagerooftype.value
+      listdatarerentstatus.value = await rerentstatusstore.getReRentStatusList(
+        keyrerentstatus.value,
+        currentpagererentstatus.value
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
+      totaldatarerentstatus.value = listdatarerentstatus.value.totaldata;
+      totalpagererentstatus.value = totaldatarerentstatus.value;
     };
     return {
       getAssetPath,
-      listdatarooftype,
+      listdatarerentstatus,
       onEdit,
       onDelete,
       onSave,
-      selectdatarooftype,
-      titlemodalrooftype,
-      totaldatarooftype,
-      totalpagerooftype,
-      currentpagerooftype,
+      selectdatarerentstatus,
+      titlemodalrerentstatus,
+      totaldatarerentstatus,
+      totalpagererentstatus,
+      currentpagererentstatus,
       onPageClick,
-      keyrooftype,
+      keyrerentstatus,
       onSearch,
       onCreate,
     };

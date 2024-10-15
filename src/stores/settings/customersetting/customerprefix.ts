@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import ApiService from "@/core/services/ApiService";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
 interface PrefixCustomer {
   id: number;
   no: number;

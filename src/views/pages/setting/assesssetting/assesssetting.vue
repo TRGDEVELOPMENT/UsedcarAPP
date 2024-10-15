@@ -45,10 +45,10 @@
               <rooftype></rooftype>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
-              tab2
+              <financestatus></financestatus>
             </div>
             <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
-              tab3
+              <rerentstatus></rerentstatus>
             </div>
           </div>
         </div>
@@ -60,9 +60,11 @@
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref } from "vue";
 import rooftype from "./rooftype.vue";
+import financestatus from "./financestatus.vue"
+import rerentstatus from "./rerentstatus.vue"
 export default defineComponent({
-  name: "Customer setting",
-  components: { rooftype },
+  name: "Assess Setting",
+  components: { rooftype,financestatus,rerentstatus },
   setup() {
     onMounted(() => {
       initial();

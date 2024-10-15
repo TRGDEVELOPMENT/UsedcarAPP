@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import ApiService from "@/core/services/ApiService";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
 interface RootType {
   id: number;
   no: number;
@@ -57,7 +56,7 @@ export const rooftypeStore = defineStore(
         page: page,
         key: key,
       };
-      await ApiService.get("/setting/customersetting/customeraddresstype/list", { params: params })
+      await ApiService.get("/setting/assess/rooftype/list", { params: params })
         .then((data) => {
           res = data.data[0];
         })
@@ -72,7 +71,7 @@ export const rooftypeStore = defineStore(
       ApiService.setURL();
       ApiService.setHeader();
       const res: Resp = { message: "", status: false };
-      await ApiService.update("/setting/customersetting/customeraddresstype", "update", {
+      await ApiService.update("/setting/assess/rooftype", "update", {
         data: [params],
       })
         .then(() => {
@@ -90,7 +89,7 @@ export const rooftypeStore = defineStore(
       ApiService.setURL();
       ApiService.setHeader();
       const res: Resp = { message: "", status: false };
-      await ApiService.update("/setting/customersetting/customeraddresstype", "delete", {
+      await ApiService.update("/setting/assess/rooftype", "delete", {
         data: [params],
       })
         .then(() => {
@@ -108,7 +107,7 @@ export const rooftypeStore = defineStore(
       ApiService.setURL();
       ApiService.setHeader();
       const res: Resp = { message: "", status: false };
-      await ApiService.post("/setting/customersetting/customeraddresstype/insert", { data: [params] })
+      await ApiService.post("/setting/assess/rooftype/insert", { data: [params] })
         .then(() => {
           res.message = "เพิ่มสำเร็จ";
           res.status = true;

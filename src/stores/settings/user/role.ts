@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import ApiService from "@/core/services/ApiService";
 import { useRouter } from "vue-router";
-interface CustomerAddresstype {
+interface Role {
   id: number;
   no: number;
   name: string;
@@ -25,38 +25,38 @@ interface Resp {
   message: string;
   status: boolean;
 }
-export type { CustomerAddresstype, RespList, Resp };
-export const customeraddresstypeStore = defineStore(
-  "customeraddresstype",
+export type { Role, RespList, Resp };
+export const roleStore = defineStore(
+  "role",
   () => {
     const router = useRouter();
     function setError() {
       router.push({ name: "500" });
     }
-    const getValidateCustomerAddresstype = async (
-      data: CustomerAddresstype
+    const getValidateUserRole = async (
+      data: Role
     ): Promise<Resp> => {
       let res: Resp = { message: "", status: false };
       if (data.name == undefined || data.name.trim() == "") {
-        res.message += ", ไม่ได้ใส่ประเภทที่อยู่";
+        res.message += ", ไม่ได้ใส่ชื่อ role";
       } else {
         res.message = "";
         res.status = true;
       }
       return res;
     };
-    const getCustomerCustomerAddresstypeList = async (
+    const getUserRoleList = async (
       key: string,
       page: number
-    ): Promise<RespList<CustomerAddresstype[]>> => {
+    ): Promise<RespList<Role[]>> => {
       ApiService.setURL();
       ApiService.setHeader();
-      let res: RespList<CustomerAddresstype[]> = { totaldata: 0, data: [] };
+      let res: RespList<Role[]> = { totaldata: 0, data: [] };
       const params = {
         page: page,
         key: key,
       };
-      await ApiService.get("/setting/customersetting/customeraddresstype/list", { params: params })
+      await ApiService.get("/setting/user/role/list", { params: params })
         .then((data) => {
           res = data.data[0];
         })
@@ -65,13 +65,13 @@ export const customeraddresstypeStore = defineStore(
         });
       return res;
     };
-    const updateCustomerAddresstypeById = async (
-      params: CustomerAddresstype
+    const updateUserRoleById = async (
+      params: Role
     ): Promise<Resp> => {
       ApiService.setURL();
       ApiService.setHeader();
       const res: Resp = { message: "", status: false };
-      await ApiService.update("/setting/customersetting/customeraddresstype", "update", {
+      await ApiService.update("/setting/user/role", "update", {
         data: [params],
       })
         .then(() => {
@@ -83,13 +83,13 @@ export const customeraddresstypeStore = defineStore(
         });
       return res;
     };
-    const deleteCustomerAddresstypeById = async (
-      params: CustomerAddresstype
+    const deleteUserRoleById = async (
+      params: Role
     ): Promise<Resp> => {
       ApiService.setURL();
       ApiService.setHeader();
       const res: Resp = { message: "", status: false };
-      await ApiService.update("/setting/customersetting/customeraddresstype", "delete", {
+      await ApiService.update("/setting/user/role", "delete", {
         data: [params],
       })
         .then(() => {
@@ -101,13 +101,13 @@ export const customeraddresstypeStore = defineStore(
         });
       return res;
     };
-    const insertCustomerAddresstypeById = async (
-      params: CustomerAddresstype
+    const insertUserRoleById = async (
+      params: Role
     ): Promise<Resp> => {
       ApiService.setURL();
       ApiService.setHeader();
       const res: Resp = { message: "", status: false };
-      await ApiService.post("/setting/customersetting/customeraddresstype/insert", { data: [params] })
+      await ApiService.post("/setting/user/role/insert", { data: [params] })
         .then(() => {
           res.message = "เพิ่มสำเร็จ";
           res.status = true;
@@ -118,11 +118,11 @@ export const customeraddresstypeStore = defineStore(
       return res;
     };
     return {
-      getValidateCustomerAddresstype,
-      getCustomerCustomerAddresstypeList,
-      updateCustomerAddresstypeById,
-      deleteCustomerAddresstypeById,
-      insertCustomerAddresstypeById,
+      getValidateUserRole,
+      getUserRoleList,
+      updateUserRoleById,
+      deleteUserRoleById,
+      insertUserRoleById,
     };
   }
 );

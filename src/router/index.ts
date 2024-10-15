@@ -49,6 +49,22 @@ const routes: Array<RouteRecordRaw> = [
               pageTitle: "assess setting", breadcrumbs: ["assess setting"],
             },
           },
+          {
+            path: "/remark",
+            name: "remark",
+            component: () => import("@/views/pages/setting/remark/remark.vue"),
+            meta: {
+              pageTitle: "remark", breadcrumbs: ["remark"],
+            },
+          },
+          {
+            path: "/role",
+            name: "user role",
+            component: () => import("@/views/pages/setting/user/role.vue"),
+            meta: {
+              pageTitle: "user role", breadcrumbs: ["user role"],
+            },
+          },
         ]
       },
     ],

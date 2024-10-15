@@ -36,6 +36,14 @@ const MainMenuConfig: Array<MenuItem> = [
             heading: "ประเมินสะภาพ",
             route: "/assesssetting",
           },
+          {
+            heading: "เหตุผลขอยกเลิก",
+            route: "/remark",
+          },
+          {
+            heading: "User role",
+            route: "/role",
+          },
         ],
       },
       

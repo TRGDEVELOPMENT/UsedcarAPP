@@ -4,7 +4,7 @@
       <div class="d-flex flex-row">
         <div class="d-flex flex-row flex-column-fluid">
           <div class="d-flex flex-row-fluid flex-left my-5">
-            <span class="fs-5 fw-bold">ประเภทหลังคา</span>
+            <span class="fs-5 fw-bold">สถานะไฟแนนซ์</span>
           </div>
           <div class="d-flex flex-row-auto w-400px flex-right me-2">
             <div class="card-title my-5">
@@ -15,7 +15,7 @@
                 />
                 <input
                   type="name"
-                  v-model="keyrooftype"
+                  v-model="keyfinancestatus"
                   @change="onSearch"
                   class="form-control form-control-solid w-400px ps-15"
                   placeholder="ค้นหา"
@@ -31,9 +31,9 @@
                   class="btn btn-primary"
                   @click="onCreate()"
                   data-bs-toggle="modal"
-                  data-bs-target="#saveoredit"
+                  data-bs-target="#saveoreditfinancestatus"
                 >
-                  เพิ่มประเภทหลังคา
+                  เพิ่มสถานะไฟแนนซ์
                 </button>
               </div>
             </div>
@@ -46,19 +46,23 @@
         <tr class="fs-6 name-gray-800 border-bottom-2 border-gray-200">
           <th class="w-50px fw-semibold name-dark name-center">ลำดับ</th>
           <th class="w-200px fw-semibold name-dark name-center">
-            ประเภทหลังคา
+            ชื่อสถานะไฟแนนซ์
           </th>
-          <th class="w-200px fw-semibold name-dark name-center">ผู้บันทึก</th>
-          <th class="w-500px fw-semibold name-dark name-center">สร้างวันที่</th>
-          <th class="w-150px fw-semibold name-dark name-center">แก้ไขล่าสุด</th>
+          <th class="w-200px fw-semibold name-dark name-center">คำอธิบาย</th>
+          <th class="w-500px fw-semibold name-dark name-center">ผู้บันทึก</th>
+          <th class="w-150px fw-semibold name-dark name-center">สร้างวันที่</th>
+          <th class="w-150px fw-semibold name-dark name-center">แก้ไขล่าสุดวันที่</th>
           <th class="w-150px fw-semibold name-dark name-center">Option</th>
         </tr>
       </thead>
-      <tbody v-for="(item, id) in listdatarooftype.data" :key="id">
+      <tbody v-for="(item, id) in listdatafinancestatus.data" :key="id">
         <tr>
           <td class="name-center">{{ item.no }}</td>
           <td class="fs-7">
             <span class="fw-semibold">{{ item.name }}</span>
+          </td>
+          <td class="fs-7">
+            <span class="fw-semibold">{{ item.description }}</span>
           </td>
           <td class="fs-7">
             <span class="fw-semibold">{{ item.creatorname }}</span>
@@ -73,7 +77,7 @@
             <a
               @click="onEdit(item)"
               data-bs-toggle="modal"
-              data-bs-target="#saveoredit"
+              data-bs-target="#saveoreditfinancestatus"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
             >
               <KTIcon icon-name="pencil" icon-class="fs-3" />
@@ -81,7 +85,7 @@
             <a
               @click="onEdit(item)"
               data-bs-toggle="modal"
-              data-bs-target="#delete"
+              data-bs-target="#deletefinancestatus"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
             >
               <KTIcon icon-name="trash" icon-class="fs-3" />
@@ -91,8 +95,8 @@
       </tbody>
       <tbody
         v-if="
-          listdatarooftype.data == undefined ||
-          listdatarooftype.data.length == 0
+          listdatafinancestatus.data == undefined ||
+          listdatafinancestatus.data.length == 0
         "
       >
         <tr class="fs-7 name-gray-800">
@@ -101,17 +105,17 @@
       </tbody>
       <tfoot>
         <td colspan="2" class="text-start">
-          <span class="fw-semibold">จำนวนทั้งหมด :</span> {{ totaldatarooftype }}
+          <span class="fw-semibold">จำนวนทั้งหมด :</span> {{ totaldatafinancestatus }}
         </td>
         <td colspan="5" class="text-end">
           <vue-awesome-paginate
-            v-if="totalpagerooftype != 0"
-            :total-items="totalpagerooftype"
+            v-if="totalpagefinancestatus != 0"
+            :total-items="totalpagefinancestatus"
             :items-per-page="5"
             :max-pages-shown="5"
             :show-jump-buttons="true"
             :on-click="onPageClick"
-            v-model="currentpagerooftype"
+            v-model="currentpagefinancestatus"
           />
         </td>
       </tfoot>
@@ -119,7 +123,7 @@
   </div>
   <div
     class="modal fade"
-    id="saveoredit"
+    id="saveoreditfinancestatus"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -130,7 +134,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">
-            {{ titlemodalrooftype }}
+            {{ titlemodalfinancestatus }}
           </h5>
           <button
             type="button"
@@ -141,13 +145,23 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">ประเภทหลังคา</label>
+            <label class="form-label">ชื่อสถานะไฟแนนซ์</label>
             <input
               type="name"
               class="form-control"
               id="prefixinputbox"
-              placeholder="นาย/ นาง/ นางสาว"
-              v-model="selectdatarooftype.name"
+              placeholder="ชื่อสถานะไฟแนนซ์"
+              v-model="selectdatafinancestatus.name"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">คำอธิบาย</label>
+            <input
+              type="name"
+              class="form-control"
+              id="prefixinputbox"
+              placeholder="คำอธิบาย"
+              v-model="selectdatafinancestatus.description"
             />
           </div>
         </div>
@@ -174,7 +188,7 @@
   </div>
   <div
     class="modal fade"
-    id="delete"
+    id="deletefinancestatus"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
@@ -196,14 +210,25 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">ประเภทหลังคา</label>
+            <label class="form-label">ชื่อสถานะไฟแนนซ์</label>
             <input
               :disabled="true"
               type="name"
               class="form-control"
               id="prefixinputbox"
-              placeholder="ประเภทหลังคา"
-              v-model="selectdatarooftype.name"
+              placeholder="ชื่อสถานะไฟแนนซ์"
+              v-model="selectdatafinancestatus.name"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">คำอธิบาย	</label>
+            <input
+              :disabled="true"
+              type="name"
+              class="form-control"
+              id="prefixinputbox"
+              placeholder="คำอธิบาย	"
+              v-model="selectdatafinancestatus.description"
             />
           </div>
         </div>
@@ -234,28 +259,28 @@
 import { getAssetPath } from "@/core/helpers/assets";
 import { defineComponent, onMounted, ref } from "vue";
 import {
-  rooftypeStore,
-  type RootType,
+  financestatusStore,
+  type FinanceStatus,
   type RespList,
   type Resp,
-} from "@/stores/settings/assessetting/rooftype";
+} from "@/stores/settings/assessetting/financestatus";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "vue3-toastify/dist/index.css";
 export default defineComponent({
-  name: "Roof Type",
+  name: "Finance Status",
   components: {},
   setup() {
-    const rooftypestore = rooftypeStore();
-    let listdatarooftype = ref<RespList<RootType[]>>({
+    const financestatusstore = financestatusStore();
+    let listdatafinancestatus = ref<RespList<FinanceStatus[]>>({
       totaldata: 0,
       data: [],
     });
-    let titlemodalrooftype = ref<string>("เพิ่มประเภทหลังคา");
-    let totaldatarooftype = ref<number>(0);
-    let totalpagerooftype = ref<number>(1);
-    let currentpagerooftype = ref<number>(1);
-    let keyrooftype = ref<string>("");
-    const selectdatarooftype = ref<RootType>({
+    let titlemodalfinancestatus = ref<string>("เพิ่มสถานะไฟแนนซ์");
+    let totaldatafinancestatus = ref<number>(0);
+    let totalpagefinancestatus = ref<number>(1);
+    let currentpagefinancestatus = ref<number>(1);
+    let keyfinancestatus = ref<string>("");
+    const selectdatafinancestatus = ref<FinanceStatus>({
       id: 0,
       no: 0,
       name: "",
@@ -275,41 +300,41 @@ export default defineComponent({
       onInitial();
     });
     const onInitial = async () => {
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
-        keyrooftype.value,
+      listdatafinancestatus.value = await financestatusstore.getFinanceStatusList(
+        keyfinancestatus.value,
         1
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
+      totaldatafinancestatus.value = listdatafinancestatus.value.totaldata;
+      totalpagefinancestatus.value = totaldatafinancestatus.value;
     };
     const onPageClick = async (page: number) => {
-      const keyword = keyrooftype.value.trim();
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
+      const keyword = keyfinancestatus.value.trim();
+      listdatafinancestatus.value = await financestatusstore.getFinanceStatusList(
         keyword,
         page
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
-      currentpagerooftype.value = page;
+      totaldatafinancestatus.value = listdatafinancestatus.value.totaldata;
+      totalpagefinancestatus.value = totaldatafinancestatus.value;
+      currentpagefinancestatus.value = page;
     };
     const onSearch = async () => {
-      currentpagerooftype.value = 1;
-      const keySearch = keyrooftype.value.trim();
+      currentpagefinancestatus.value = 1;
+      const keySearch = keyfinancestatus.value.trim();
       if (keySearch != "") {
-        const keyword = keyrooftype.value.trim();
-        listdatarooftype.value = await rooftypestore.getRootTypeList(
+        const keyword = keyfinancestatus.value.trim();
+        listdatafinancestatus.value = await financestatusstore.getFinanceStatusList(
           keyword,
-          currentpagerooftype.value
+          currentpagefinancestatus.value
         );
-        totaldatarooftype.value = listdatarooftype.value.totaldata;
-        totalpagerooftype.value = totaldatarooftype.value;
+        totaldatafinancestatus.value = listdatafinancestatus.value.totaldata;
+        totalpagefinancestatus.value = totaldatafinancestatus.value;
       } else {
         onInitial();
       }
-      console.log(listdatarooftype.value);
+      console.log(listdatafinancestatus.value);
     };
     const onCreate = async () => {
-      selectdatarooftype.value = {
+      selectdatafinancestatus.value = {
         id: 0,
         no: 0,
         name: "",
@@ -327,16 +352,16 @@ export default defineComponent({
       };
 
       if (
-        selectdatarooftype.value.name == undefined ||
-        selectdatarooftype.value.name == ""
+        selectdatafinancestatus.value.name == undefined ||
+        selectdatafinancestatus.value.name == ""
       ) {
-        titlemodalrooftype.value = "เพิ่มไขประเภทหลังคา";
+        titlemodalfinancestatus.value = "เพิ่มไขสถานะไฟแนนซ์";
       } else {
-        titlemodalrooftype.value = "แก้ไขประเภทหลังคา";
+        titlemodalfinancestatus.value = "แก้ไขสถานะไฟแนนซ์";
       }
     };
-    const onEdit = async (item: RootType) => {
-      selectdatarooftype.value = {
+    const onEdit = async (item: FinanceStatus) => {
+      selectdatafinancestatus.value = {
         id: item.id,
         no: item.no,
         name: item.name,
@@ -354,24 +379,24 @@ export default defineComponent({
       };
 
       if (
-        selectdatarooftype.value.name == undefined ||
-        selectdatarooftype.value.name == ""
+        selectdatafinancestatus.value.name == undefined ||
+        selectdatafinancestatus.value.name == ""
       ) {
-        titlemodalrooftype.value = "เพิ่มประเภทหลังคา";
+        titlemodalfinancestatus.value = "เพิ่มสถานะไฟแนนซ์";
       } else {
-        titlemodalrooftype.value = "แก้ไขประเภทหลังคา";
+        titlemodalfinancestatus.value = "แก้ไขสถานะไฟแนนซ์";
       }
     };
     const onSave = async () => {
       const resp = ref<Resp>({ message: "", status: false });
-      resp.value = await rooftypestore.getValidateRootType(
-        selectdatarooftype.value
+      resp.value = await financestatusstore.getValidateFinanceStatus(
+        selectdatafinancestatus.value
       );
       if (resp.value.status) {
-        if (selectdatarooftype.value.id == 0) {
-          console.log("if" + selectdatarooftype.value.id);
-          resp.value = await rooftypestore.insertRootTypeById(
-            selectdatarooftype.value
+        if (selectdatafinancestatus.value.id == 0) {
+          console.log("if" + selectdatafinancestatus.value.id);
+          resp.value = await financestatusstore.insertFinanceStatusById(
+            selectdatafinancestatus.value
           );
           if (resp.value.status) {
             Swal.fire({
@@ -397,8 +422,8 @@ export default defineComponent({
             });
           }
         } else {
-          resp.value = await rooftypestore.updateRootTypeById(
-            selectdatarooftype.value
+          resp.value = await financestatusstore.updateFinanceStatusById(
+            selectdatafinancestatus.value
           );
           if (resp.value.status) {
             Swal.fire({
@@ -436,22 +461,22 @@ export default defineComponent({
           },
         });
       }
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
-        keyrooftype.value,
-        currentpagerooftype.value
+      listdatafinancestatus.value = await financestatusstore.getFinanceStatusList(
+        keyfinancestatus.value,
+        currentpagefinancestatus.value
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
+      totaldatafinancestatus.value = listdatafinancestatus.value.totaldata;
+      totalpagefinancestatus.value = totaldatafinancestatus.value;
     };
     const onDelete = async () => {
       const resp = ref<Resp>({ message: "", status: false });
-      resp.value = await rooftypestore.getValidateRootType(
-        selectdatarooftype.value
+      resp.value = await financestatusstore.getValidateFinanceStatus(
+        selectdatafinancestatus.value
       );
       if (resp.value.status) {
-        selectdatarooftype.value.isactive = false;
-        resp.value = await rooftypestore.deleteRootTypeById(
-          selectdatarooftype.value
+        selectdatafinancestatus.value.isactive = false;
+        resp.value = await financestatusstore.deleteFinanceStatusById(
+          selectdatafinancestatus.value
         );
         if (resp.value.status) {
           Swal.fire({
@@ -488,26 +513,26 @@ export default defineComponent({
           },
         });
       }
-      listdatarooftype.value = await rooftypestore.getRootTypeList(
-        keyrooftype.value,
-        currentpagerooftype.value
+      listdatafinancestatus.value = await financestatusstore.getFinanceStatusList(
+        keyfinancestatus.value,
+        currentpagefinancestatus.value
       );
-      totaldatarooftype.value = listdatarooftype.value.totaldata;
-      totalpagerooftype.value = totaldatarooftype.value;
+      totaldatafinancestatus.value = listdatafinancestatus.value.totaldata;
+      totalpagefinancestatus.value = totaldatafinancestatus.value;
     };
     return {
       getAssetPath,
-      listdatarooftype,
+      listdatafinancestatus,
       onEdit,
       onDelete,
       onSave,
-      selectdatarooftype,
-      titlemodalrooftype,
-      totaldatarooftype,
-      totalpagerooftype,
-      currentpagerooftype,
+      selectdatafinancestatus,
+      titlemodalfinancestatus,
+      totaldatafinancestatus,
+      totalpagefinancestatus,
+      currentpagefinancestatus,
       onPageClick,
-      keyrooftype,
+      keyfinancestatus,
       onSearch,
       onCreate,
     };
