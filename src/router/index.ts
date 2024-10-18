@@ -65,6 +65,14 @@ const routes: Array<RouteRecordRaw> = [
               pageTitle: "user role", breadcrumbs: ["user role"],
             },
           },
+          {
+            path: "/usermanagement",
+            name: "usermanagement",
+            component: () => import("@/views/pages/setting/user/usermanagement.vue"),
+            meta: {
+              pageTitle: "user management", breadcrumbs: ["user management"],
+            },
+          },
         ]
       },
     ],

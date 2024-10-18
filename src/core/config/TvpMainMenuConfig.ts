@@ -44,6 +44,10 @@ const MainMenuConfig: Array<MenuItem> = [
             heading: "User role",
             route: "/role",
           },
+          {
+            heading: "User management",
+            route: "/usermanagement",
+          },
         ],
       },
       
