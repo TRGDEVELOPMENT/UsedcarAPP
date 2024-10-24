@@ -45,6 +45,21 @@ export const rerentstatusStore = defineStore(
       }
       return res;
     };
+    const checkDuplicate = async (keyword: string): Promise<boolean> => {
+      let res: boolean = false;
+      const listdata = await getReRentStatusList(keyword, 0);
+      if (listdata.data) {
+        let i = 0;
+        while (i < listdata.data.length) {
+          if (listdata.data[i].status == keyword) {
+            res = true;
+            break;
+          }
+          i++;
+        }
+      }
+      return res;
+    };
     const getReRentStatusList = async (
       key: string,
       page: number
@@ -123,6 +138,7 @@ export const rerentstatusStore = defineStore(
       updateReRentStatusById,
       deleteReRentStatusById,
       insertReRentStatusById,
+      checkDuplicate,
     };
   }
 );

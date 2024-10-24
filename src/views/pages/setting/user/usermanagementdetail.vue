@@ -6,12 +6,12 @@
           <span class="">ตั้งค่า</span>
         </li>
         <li class="breadcrumb-item">
-          <span class="">User Management</span>
+          <span class="">User Management detail</span>
         </li>
       </ol>
     </div>
     <div class="p-header">
-      <span class="fs-2 fw-bold">User Management</span>
+      <span class="fs-2 fw-bold">User Management detail</span>
     </div>
     <div class="card shadow-sm container-card">
       <div class="card-body">
@@ -20,7 +20,7 @@
             <div class="d-flex flex-row">
               <div class="d-flex flex-row flex-column-fluid">
                 <div class="d-flex flex-row-fluid flex-left my-5">
-                  <span class="fs-5 fw-bold">User Management</span>
+                  <span class="fs-5 fw-bold">User Management detail</span>
                 </div>
                 <div class="d-flex flex-row-auto w-400px flex-right me-2">
                   <div class="card-title my-5">
@@ -104,6 +104,14 @@
                   >
                     <KTIcon icon-name="pencil" icon-class="fs-3" />
                   </a>
+                  <a
+                    @click="onEdit()"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteuserrole"
+                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                  >
+                    <KTIcon icon-name="trash" icon-class="fs-3" />
+                  </a>
                 </td>
               </tr>
             </tbody>
@@ -151,7 +159,6 @@ import {
 } from "@/stores/settings/user/employee";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "vue3-toastify/dist/index.css";
-import router from "@/router";
 export default defineComponent({
   name: "role",
   components: {},
@@ -230,10 +237,113 @@ export default defineComponent({
         titlemodaluserrole.value = "แก้ไข User Role";
       }
     };
-    const onEdit = async () => {
-      router.push("/usermanagementdetail")
+    const onEdit = async (/*item: */) => {
+      // selectdatafinancestatus.value = {
+      //   id: item.id,
+      //   no: item.no,
+      //   name: item.name,
+      //   description: item.description,
+      //   isactive: item.isactive,
+      //   creatorid: item.creatorid,
+      //   creatorname: item.creatorname,
+      //   createddate: item.createddate,
+      //   modifiedid: item.modifiedid,
+      //   modifiedname: item.modifiedname,
+      //   modifieddate: item.modifieddate,
+      //   deletedid: item.deletedid,
+      //   deletedname: item.deletedname,
+      //   deleteddate: item.deleteddate,
+      // };
+
+      // if (
+      //   selectdatafinancestatus.value.name == undefined ||
+      //   selectdatafinancestatus.value.name == ""
+      // ) {
+      //   titlemodaluserrole.value = "เพิ่ม User Role";
+      // } else {
+      //   titlemodaluserrole.value = "แก้ไข User Role";
+      // }
     };
     const onSave = async () => {
+      // const resp = ref<Resp>({ message: "", status: false });
+      // resp.value = await userrolestore.getValidateUserRole(
+      //   selectdatafinancestatus.value
+      // );
+      // if (resp.value.status) {
+      //   if (selectdatafinancestatus.value.id == 0) {
+      //     console.log("if" + selectdatafinancestatus.value.id);
+      //     resp.value = await userrolestore.insertUserRoleById(
+      //       selectdatafinancestatus.value
+      //     );
+      //     if (resp.value.status) {
+      //       Swal.fire({
+      //         name: resp.value.message,
+      //         icon: "success",
+      //         buttonsStyling: false,
+      //         confirmButtonname: "ตกลง",
+      //         heightAuto: false,
+      //         customClass: {
+      //           confirmButton: "btn fw-semibold btn-light-primary btn-sm",
+      //         },
+      //       });
+      //     } else {
+      //       Swal.fire({
+      //         name: resp.value.message,
+      //         icon: "error",
+      //         buttonsStyling: false,
+      //         confirmButtonname: "ลองอีกครั้ง!",
+      //         heightAuto: false,
+      //         customClass: {
+      //           confirmButton: "btn fw-semibold btn-light-danger btn-sm",
+      //         },
+      //       });
+      //     }
+      //   } else {
+      //     resp.value = await userrolestore.updateUserRoleById(
+      //       selectdatafinancestatus.value
+      //     );
+      //     if (resp.value.status) {
+      //       Swal.fire({
+      //         name: resp.value.message,
+      //         icon: "success",
+      //         buttonsStyling: false,
+      //         confirmButtonname: "ตกลง",
+      //         heightAuto: false,
+      //         customClass: {
+      //           confirmButton: "btn fw-semibold btn-light-primary btn-sm",
+      //         },
+      //       });
+      //     } else {
+      //       Swal.fire({
+      //         name: resp.value.message,
+      //         icon: "error",
+      //         buttonsStyling: false,
+      //         confirmButtonname: "ลองอีกครั้ง!",
+      //         heightAuto: false,
+      //         customClass: {
+      //           confirmButton: "btn fw-semibold btn-light-danger btn-sm",
+      //         },
+      //       });
+      //     }
+      //   }
+      // } else {
+      //   Swal.fire({
+      //     name: resp.value.message,
+      //     icon: "error",
+      //     buttonsStyling: false,
+      //     confirmButtonname: "ลองอีกครั้ง!",
+      //     heightAuto: false,
+      //     customClass: {
+      //       confirmButton: "btn fw-semibold btn-light-danger btn-sm",
+      //     },
+      //   });
+      // }
+      // listdatauserrole.value = await userrolestore.getUserRoleList(
+      //   keyuserrole.value,
+      //   currentpageuserrole.value
+      // );
+      // totaldatauserrole.value = listdatauserrole.value.totaldata;
+      // totalpageuserrole.value = totaldatauserrole.value;
     };
     const onDelete = async () => {
       const resp = ref<Resp>({ message: "", status: false });

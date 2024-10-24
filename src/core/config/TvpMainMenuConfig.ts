@@ -37,6 +37,10 @@ const MainMenuConfig: Array<MenuItem> = [
             route: "/assesssetting",
           },
           {
+            heading: "Parking location",
+            route: "/parkinglocation",
+          },
+          {
             heading: "เหตุผลขอยกเลิก",
             route: "/remark",
           },

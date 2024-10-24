@@ -47,6 +47,21 @@ export const customerpaymentStore = defineStore("customerpayment", () => {
     }
     return res;
   };
+  const checkDuplicate = async (keyword: string): Promise<boolean> => {
+    let res: boolean = false;
+    const listdata = await getCustomerPaymentList(keyword, 0);
+    if (listdata.data) {
+      let i = 0;
+      while (i < listdata.data.length) {
+        if (listdata.data[i].code == keyword) {
+          res = true;
+          break;
+        }
+        i++;
+      }
+    }
+    return res;
+  };
   const getCustomerPaymentList = async (
     key: string,
     page: number
@@ -119,5 +134,12 @@ export const customerpaymentStore = defineStore("customerpayment", () => {
       });
     return res;
   };
-  return { getValidateCustomerPayment,getCustomerPaymentList,updateCustomerPaymentById,deleteCustomerPaymentById,insertCustomerPaymentById };
+  return {
+    getValidateCustomerPayment,
+    getCustomerPaymentList,
+    updateCustomerPaymentById,
+    deleteCustomerPaymentById,
+    insertCustomerPaymentById,
+    checkDuplicate,
+  };
 });

@@ -39,6 +39,21 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
     }
     return res;
   };
+  const checkDuplicate = async (keyword: string): Promise<boolean> => {
+    let res: boolean = false;
+    const listdata = await getPrefixSettingList(keyword, 0);
+    if (listdata.data) {
+      let i = 0;
+      while (i < listdata.data.length) {
+        if (listdata.data[i].text == keyword) {
+          res = true;
+          break;
+        }
+        i++;
+      }
+    }
+    return res;
+  };
   const getPrefixSettingList = async (
     key: string,
     page: number
@@ -111,12 +126,12 @@ export const prefixcustomerStore = defineStore("prefixcustomer", () => {
       });
     return res;
   };
-  
   return {
     getPrefixSettingList,
     getValidatePrefixSetting,
     updatePrefixSettingById,
     deletePrefixSettingById,
     insertPrefixSettingById,
+    checkDuplicate,
   };
 });
