@@ -74,11 +74,19 @@ const routes: Array<RouteRecordRaw> = [
             },
           },
           {
-            path: "/usermanagementdetail",
+            path: "/usermanagementdetail/:id/:name",
             name: "usermanagementdetail",
             component: () => import("@/views/pages/setting/user/usermanagementdetail.vue"),
             meta: {
               pageTitle: "user management detail", breadcrumbs: ["user management detail"],
+            },
+          },
+          {
+            path: "/rolemodule/:id/:name",
+            name: "rolemodule",
+            component: () => import("@/views/pages/setting/user/rolemodule.vue"),
+            meta: {
+              pageTitle: "role module", breadcrumbs: ["role module"],
             },
           },
           {

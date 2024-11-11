@@ -97,7 +97,7 @@
                 </td>
                 <td class="fs-7 name-center">
                   <a
-                    @click="onEdit()"
+                    @click="onEdit(item.id,item.name)"
                     data-bs-toggle="modal"
                     data-bs-target="#saveoredituserrole"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
@@ -230,8 +230,8 @@ export default defineComponent({
         titlemodaluserrole.value = "แก้ไข User Role";
       }
     };
-    const onEdit = async () => {
-      router.push("/usermanagementdetail")
+    const onEdit = async (id : number,name : string) => {
+      router.push("/usermanagementdetail/"+id+"/"+name)
     };
     const onSave = async () => {
     };

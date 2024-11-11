@@ -11,6 +11,7 @@ interface Employee {
 }
 interface EmployeeModule{
   id: number;
+  no: number;
   module: string;
   description: string;
   isaccess: string;
@@ -71,6 +72,24 @@ export const employeeStore = defineStore(
         key: key,
       };
       await ApiService.get("/setting/user/employee/list", { params: params })
+        .then((data) => {
+          res = data.data[0];
+        })
+        .catch(() => {
+          setError();
+        });
+      return res;
+    };
+    const getEmployeeModuleList = async (
+      id: number
+    ): Promise<RespList<EmployeeModule[]>> => {
+      ApiService.setURL();
+      ApiService.setHeader();
+      let res: RespList<EmployeeModule[]> = { totaldata: 0, data: [] };
+      const params = {
+        id: id,
+      };
+      await ApiService.get("/setting/user/employeemodule/list", { params: params })
         .then((data) => {
           res = data.data[0];
         })
@@ -153,7 +172,8 @@ export const employeeStore = defineStore(
       updateEmployeeById,
       deleteEmployeeById,
       insertEmployeeById,
-      getUserRoleList
+      getUserRoleList,
+      getEmployeeModuleList
     };
   }
 );

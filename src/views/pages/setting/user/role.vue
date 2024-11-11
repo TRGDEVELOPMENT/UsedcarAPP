@@ -83,6 +83,9 @@
                 <th class="w-150px fw-semibold name-dark name-center">
                   Option
                 </th>
+                <th class="w-150px fw-semibold name-dark name-center">
+                  Edit module
+                </th>
               </tr>
             </thead>
             <tbody v-for="(item, id) in listdatauserrole.data" :key="id">
@@ -119,6 +122,15 @@
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                   >
                     <KTIcon icon-name="trash" icon-class="fs-3" />
+                  </a>
+                </td>
+                <td class="fs-7 name-center">
+                  <a
+                    @click="onEditModule(item)"
+                    data-bs-target="#saveoredituserrole"
+                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                  >
+                    <KTIcon icon-name="pencil" icon-class="fs-3" />
                   </a>
                 </td>
               </tr>
@@ -299,6 +311,7 @@ import {
 } from "@/stores/settings/user/role";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "vue3-toastify/dist/index.css";
+import router from "@/router";
 export default defineComponent({
   name: "role",
   components: {},
@@ -420,15 +433,32 @@ export default defineComponent({
         titlemodaluserrole.value = "แก้ไข User Role";
       }
     };
+    const onEditModule = async (item: any) =>{
+      const name = item.name;
+      router.push("/rolemodule/"+item.id+"/"+ name.replace("/"," "));
+    }
     const onSave = async () => {
       const resp = ref<Resp>({ message: "", status: false });
+      let res;
       resp.value = await userrolestore.getValidateUserRole(
         selectdatafinancestatus.value
       );
       if (resp.value.status) {
         if (selectdatafinancestatus.value.id == 0) {
-          console.log("if" + selectdatafinancestatus.value.id);
-          resp.value = await userrolestore.insertUserRoleById(
+          res = await userrolestore.checkDuplicate(selectdatafinancestatus.value.name);
+          if(res){
+            Swal.fire({
+              name: resp.value.message,
+              icon: "error",
+              buttonsStyling: false,
+              confirmButtonname: "รายการซ้ำ!",
+              heightAuto: false,
+              customClass: {
+                confirmButton: "btn fw-semibold btn-light-danger btn-sm",
+              },
+            });
+          }else{
+            resp.value = await userrolestore.insertUserRoleById(
             selectdatafinancestatus.value
           );
           if (resp.value.status) {
@@ -454,6 +484,8 @@ export default defineComponent({
               },
             });
           }
+          }
+
         } else {
           resp.value = await userrolestore.updateUserRoleById(
             selectdatafinancestatus.value
@@ -568,6 +600,7 @@ export default defineComponent({
       keyuserrole,
       onSearch,
       onCreate,
+      onEditModule
     };
   },
 });

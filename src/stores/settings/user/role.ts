@@ -17,6 +17,26 @@ interface Role {
   deletedname: string;
   deleteddate: string;
 }
+interface RoleModule{
+  id: number,
+  no: number,
+  roleid: number,
+  emoduleid: number,
+  moduleid: number,
+  name: string,
+  isactive: boolean,
+  approve: boolean,
+  description: string,
+  creatorid: string,
+  creatorname: string,
+  createddate: string,
+  modifiedid: string,
+  modifiedname: string,
+  modifieddate: string,
+  deletedid: string,
+  deletedname: string,
+  deleteddate: string
+}
 interface RespList<data = any> {
   totaldata: number;
   data: data;
@@ -25,7 +45,7 @@ interface Resp {
   message: string;
   status: boolean;
 }
-export type { Role, RespList, Resp };
+export type { Role, RespList, Resp , RoleModule};
 export const roleStore = defineStore(
   "role",
   () => {
@@ -43,6 +63,37 @@ export const roleStore = defineStore(
         res.message = "";
         res.status = true;
       }
+      return res;
+    };
+    const checkDuplicate = async(
+      key:string
+    ): Promise<boolean> => {
+      let res: boolean = false;let i = 0;let resData: Role[] = [];
+      resData = (await getUserRoleList(key,0)).data;
+      resData.forEach( (item) => {
+        if(item.name == key){
+          res = true;
+        }
+        i++;
+      });
+      return res;
+    }
+    const getModuleList = async (
+      id: number
+    ): Promise<RespList<RoleModule[]>> => {
+      ApiService.setURL();
+      ApiService.setHeader();
+      let res: RespList<RoleModule[]> = { totaldata: 0, data: [] };
+      const params = {
+        id: id,
+      };
+      await ApiService.get("/setting/user/module/list", { params: params })
+        .then((data) => {
+          res = data.data[0];
+        })
+        .catch(() => {
+          setError();
+        });
       return res;
     };
     const getUserRoleList = async (
@@ -117,12 +168,19 @@ export const roleStore = defineStore(
         });
       return res;
     };
+    const inserOrUpdateModuleRole = async (item: RoleModule[]):Promise<boolean> => {
+      let res:boolean = false;
+      return res;
+    }
     return {
       getValidateUserRole,
       getUserRoleList,
       updateUserRoleById,
       deleteUserRoleById,
       insertUserRoleById,
+      getModuleList,
+      inserOrUpdateModuleRole,
+      checkDuplicate
     };
   }
 );
